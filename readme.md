@@ -1,6 +1,8 @@
 Node Simple XMPP
 ================
-Simple High Level NodeJS XMPP Library
+
+Potentially Simpler High Level NodeJS XMPP Library, which supports listening to
+more than one account.
 
 Status
 ------
@@ -12,11 +14,16 @@ Dependencies
 
 Install
 -------
-	npm install simple-xmpp
+	npm install simpler-xmpp
 
 Example
 -------
-	var xmpp = require('simple-xmpp');
+	var xmpp = require('simple-xmpp')({
+	    jid         : username@gmail.com,
+	    password    : password,
+	    host        : 'talk.google.com',
+	    port        : 5222
+	});
 
 	xmpp.on('online', function() {
 		console.log('Yes, I\'m connected!');
@@ -30,12 +37,7 @@ Example
 		console.error(err);
 	});
 
-	xmpp.connect({
-	    jid         : username@gmail.com,
-	    password    : password,
-	    host        : 'talk.google.com',
-	    port        : 5222
-	});
+	xmpp.connect();
 
 Documentation
 -------------
@@ -62,10 +64,10 @@ event where emits when state of the buddy on your chat list changes
 	/**
 		@param jid - is the id of buddy (eg:- hello@gmail.com)
 		@param state - state of the buddy. value will be one of the following constant can be access via require('simple-xmpp').STATUS
-			AWAY - Buddy goes away
-		    DND - Buddy set its status as "Do Not Disturb" or  "Busy",
-		    ONLINE - Buddy comes online or available to chat
-		    OFFLINE - Buddy goes offline
+			"away" - Buddy goes away
+		    "dnd" - Buddy set its status as "Do Not Disturb" or  "Busy",
+		    "online" - Buddy comes online or available to chat
+		    "offline" - Buddy goes offline
 	*/
 	xmpp.on('buddy', function(jid, state) {
 		console.log('%s is in %s state', jid, state);
@@ -109,23 +111,3 @@ Probe the state of the buddy
 	xmpp.probe(jid, function(state) {
 		
 	})
-
-### Fields
-Fields provided Additional Core functionalies
-
-#### xmpp.conn
-The underline connection object
-	
-	var xmpp = simpleXMPP.connect({});
-	xmpp.conn; // the connection object
-
-#### xmpp.Element 
-Underline XMPP Element class
-	
-	var xmpp = simpleXMPP.connect({});
-	xmpp.Element; // the connection objec	
-
-
-	
-
-

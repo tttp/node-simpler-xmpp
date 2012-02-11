@@ -24,8 +24,13 @@
 
  */
 
-var xmpp = require('../lib/simple-xmpp');
 var argv = process.argv;
+var xmpp = require('../lib/simple-xmpp')({
+    jid         : argv[2],
+    password    : argv[3],
+    host        : 'talk.google.com',
+    port        : 5222
+});
 
 xmpp.on('online', function() {
 	console.log('Yes, I\'m connected!');
@@ -34,7 +39,7 @@ xmpp.on('online', function() {
 xmpp.on('chat', function(from, message) {
 	xmpp.send(from, 'echo: ' + message);
 	xmpp.probe('arunoda.susiripala@gmail.com', function(state) {
-		console.log(state == xmpp.STATUS.ONLINE);
+		console.log(state === "online");
 	});
 });
 
@@ -47,10 +52,4 @@ xmpp.on('buddy', function(jid, state) {
 });
 
 
-xmpp.connect({
-    jid         : argv[2],
-    password    : argv[3],
-    host        : 'talk.google.com',
-    host        : 'talk.google.com',
-    port        : 5222
-});
+xmpp.connect();

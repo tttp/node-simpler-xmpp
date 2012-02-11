@@ -22,7 +22,7 @@ exports.testOnline = function(test) {
 	conn.mock('on').takes('error', function() {});
 
 	conn.mock('send').takes(new ltx.Element('presence'));
-	simpleXMPP.connect({});
+	simpleXMPP({});
 
 	test.ok(conn.assert());
 	test.done();
@@ -43,8 +43,8 @@ exports.testError = function(test) {
     	test.deepEqual(aa.toString(), stanza.toString());
     };
 
-	simpleXMPP.connect({});
-	simpleXMPP.send('hello@gmail.com', 'hi');
+	var client = simpleXMPP({});
+	client.send('hello@gmail.com', 'hi');
 
 	test.ok(conn.assert());
 	test.done();
@@ -67,7 +67,7 @@ exports.testOnChat = function(test) {
 		test.equal(from, f);
 		test.equal(message, m);
 	});
-	simpleXMPP.connect({});
+	simpleXMPP({});
 
 	test.ok(conn.assert());
 	test.done();
