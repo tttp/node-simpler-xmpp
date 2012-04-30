@@ -29,5 +29,11 @@ client.on('error', function (err) {
     console.error(err);
 });
 
-client.send(to, "this is a message from the send-msg script");
-//client.discoverServices('gmail.com');
+client.send(to, "this is a message from the send-msg script at " + new Date());
+client.discoverServices('gmail.com', function(err, result) {
+    if (err) {
+        return console.error("discovery failed", util.inspect(err, false, 10));
+    }
+    
+    console.log("discovered", util.inspect(result, false, 10));
+});
