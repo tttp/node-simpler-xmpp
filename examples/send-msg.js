@@ -6,27 +6,28 @@ if (process.argv.length < 5) {
 }
 
 var simpler = require('../index'),
+    Element = require('node-xmpp').Element,
     jid = process.argv[2],
     password = process.argv[3],
     to = process.argv[4],
-    xmpp = simpler({
+    client = simpler({
         jid:jid,
         password:password,
         host:'talk.google.com'
     }),
     connection;
 
-xmpp.on('online', function () {
+client.on('online', function () {
     console.log('Yes, I\'m connected!');
-    connection.send(to, "this is a message from the send-msg script");
 });
 
-xmpp.on('chat', function (from, message) {
+client.on('chat', function (from, message) {
     console.log("from %s: ", from, message);
 });
 
-xmpp.on('error', function (err) {
+client.on('error', function (err) {
     console.error(err);
 });
 
-connection = xmpp.connect();
+client.send(to, "this is a message from the send-msg script");
+//client.discoverServices('gmail.com');
