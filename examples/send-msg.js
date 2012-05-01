@@ -6,7 +6,6 @@ if (process.argv.length < 5) {
 }
 
 var simpler = require('../index'),
-    Element = require('node-xmpp').Element,
     jid = process.argv[2],
     password = process.argv[3],
     to = process.argv[4],
@@ -18,11 +17,19 @@ var simpler = require('../index'),
     connection;
 
 client.on('online', function () {
-    console.log('Yes, I\'m connected!');
+    console.log('online!');
 });
 
 client.on('chat', function (from, message) {
     console.log("from %s: ", from, message);
+});
+
+client.on('roster', function (roster) {
+    console.log("roster", roster);
+});
+
+client.on('presence', function (from, presence, presences) {
+    console.log("presence", from, presence);
 });
 
 client.on('error', function (err) {
@@ -30,17 +37,3 @@ client.on('error', function (err) {
 });
 
 client.send(to, "this is a message from the send-msg script at " + new Date());
-client.discoverServices('gmail.com', function(err, result) {
-    if (err) {
-        return console.error("discovery failed", util.inspect(err, false, 10));
-    }
-
-    console.log("discovered", util.inspect(result, false, 10));
-});
-client.loadRoster(function(err, result) {
-    if (err) {
-        return console.error("loading roster failed", util.inspect(err, false, 10));
-    }
-
-    console.log("roster", util.inspect(result, false, 10));
-});
