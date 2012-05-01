@@ -37,3 +37,10 @@ client.discoverServices('gmail.com', function(err, result) {
 
     console.log("discovered", util.inspect(result, false, 10));
 });
+client.loadRoster(function(err, result) {
+    if (err) {
+        return console.error("loading roster failed", util.inspect(err, false, 10));
+    }
+
+    console.log("roster", util.inspect(result, false, 10));
+});
