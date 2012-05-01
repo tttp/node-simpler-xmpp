@@ -34,6 +34,6 @@ client.discoverServices('gmail.com', function(err, result) {
     if (err) {
         return console.error("discovery failed", util.inspect(err, false, 10));
     }
-    
+
     console.log("discovered", util.inspect(result, false, 10));
 });
