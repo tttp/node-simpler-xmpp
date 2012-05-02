@@ -1,3 +1,7 @@
+process.on('uncaughtException', function(err) {
+    console.error(err);
+});
+
 var util = require("util");
 
 if (process.argv.length < 5) {
@@ -37,3 +41,4 @@ client.on('error', function (err) {
 });
 
 client.send(to, "this is a message from the send-msg script at " + new Date());
+client.addBuddy(to);
