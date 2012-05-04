@@ -8,7 +8,7 @@
     var util = require("util");
 
     if (process.argv.length < 5) {
-        console.log("please pass jid, password, and the destination address as command line params");
+        console.log("please pass jid, password, and the muc jid as command line params");
         process.exit(1);
     }
 
@@ -27,6 +27,10 @@
         console.log('online!');
     });
 
+    client.on('stanza', function (stanza) {
+        console.log("stanza: %j", stanza);
+    });
+
     client.on('chat', function (from, message) {
         console.log("from %s: ", from, message);
     });
@@ -40,9 +44,8 @@
     });
 
     client.on('error', function (err) {
-        console.error(err);
+        console.error("error: %j", err);
     });
 
-    client.addBuddy(to);
-    client.send(to, "this is a message from the send-msg script at " + new Date());
+    client.discoverRoom(to);
 })(process, console);
