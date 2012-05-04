@@ -28,7 +28,7 @@
     });
 
     client.on('stanza', function (stanza) {
-        console.log("stanza: %j", stanza);
+        // console.log("stanza: %j", stanza);
     });
 
     client.on('chat', function (from, message) {
